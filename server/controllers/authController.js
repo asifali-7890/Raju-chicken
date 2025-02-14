@@ -1,82 +1,84 @@
-import User from '../models/User';
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
+import { sendOTPEmail } from '../utils/sendEmail.js';
 
-// Register user
-exports.register = async (req, res, next) => {
+// Endpoint to send OTP (for both existing and new users)
+export const sendOTP = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-
-        // Check if user exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ success: false, error: 'User already exists' });
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ success: false, error: 'Email is required' });
         }
 
-        // Hash password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        // Check if the user already exists
+        let user = await User.findOne({ email });
+        if (!user) {
+            // Create a new user if not found
+            user = await User.create({ email });
+        }
 
-        // Create user
-        const user = await User.create({
-            name,
-            email,
-            password: hashedPassword
-        });
+        // Generate a 6-digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        // Set OTP expiration (5 minutes from now)
+        const otpExpire = Date.now() + 5 * 60 * 1000;
 
-        // Generate token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES
-        });
+        // Update user with OTP and its expiration
+        user.otp = otp;
+        user.otpExpire = otpExpire;
+        await user.save();
 
-        res.status(201).json({
-            success: true,
-            token,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-            }
-        });
+        // Send the OTP via email
+        await sendOTPEmail(email, otp);
+
+        res.status(200).json({ success: true, message: 'OTP sent. Please check your email.' });
     } catch (error) {
-        next(error);
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Server error' });
     }
 };
 
-// Login user
-exports.login = async (req, res, next) => {
+// Endpoint to verify OTP and log the user in
+export const verifyOTP = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, otp } = req.body;
+        if (!email || !otp) {
+            return res.status(400).json({ success: false, error: 'Email and OTP are required' });
+        }
 
-        // Check if user exists
-        const user = await User.findOne({ email }).select('+password');
+        // Find the user by email
+        const user = await User.findOne({ email }).select('+otp');
+
         if (!user) {
-            return res.status(401).json({ success: false, error: 'Invalid credentials' });
+            return res.status(400).json({ success: false, error: 'User not found' });
         }
 
-        // Check password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ success: false, error: 'Invalid credentials' });
+        // Check if OTP matches
+
+        console.log('Stored OTP:', typeof user.otp);
+        console.log('Entered OTP:', typeof otp);
+
+        if (user.otp !== otp) {
+            return res.status(400).json({ success: false, error: 'Invalid OTP' });
         }
 
-        // Generate token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES
-        });
+        // Check if OTP has expired
+        if (user.otpExpire < Date.now()) {
+            return res.status(400).json({ success: false, error: 'OTP expired' });
+        }
 
-        res.status(200).json({
-            success: true,
-            token,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-            }
-        });
+        // OTP is valid—mark user as verified
+        user.isVerified = true;
+        // Optionally, clear OTP fields
+        user.otp = undefined;
+        user.otpExpire = undefined;
+        await user.save();
+
+        // Generate a JWT token for authentication
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        res.status(200).json({ success: true, message: 'Logged in successfully', token });
     } catch (error) {
-        next(error);
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Server error' });
     }
 };

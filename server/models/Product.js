@@ -4,35 +4,30 @@ const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please enter product name'],
-        trim: true
+        trim: true,
     },
     description: {
         type: String,
-        required: [true, 'Please enter product description']
+        required: [true, 'Please enter product description'],
     },
     price: {
         type: Number,
         required: [true, 'Please enter product price'],
-        min: [0, 'Price cannot be negative']
+        min: [0, 'Price cannot be negative'],
     },
-    category: {
-        type: String,
-        required: [true, 'Please select category'],
-        enum: ['whole', 'cuts', 'processed', 'marinated']
-    },
-    stock: {
+    weight: {
         type: Number,
-        required: [true, 'Please enter product stock'],
-        min: [0, 'Stock cannot be negative']
+        required: [true, 'Please enter weight'],
+        min: [0, 'Weight cannot be negative'],
     },
-    images: [{
+    image: {
         public_id: String,
-        url: String
-    }],
+        url: String,
+    },
     createdAt: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
-module.exports = mongoose.model('Product', productSchema);
+export default mongoose.model('Product', productSchema);

@@ -1,10 +1,17 @@
-import { useState } from 'react';
+// src/components/Navbar.js
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCartIcon, UserIcon, UserGroupIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import {
+    ShoppingCartIcon,
+    UserIcon,
+    MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline';
 import rajuChicken from '../../assets/images/rajuChicken.png';
+import { AuthContext } from '../../context/AuthContext.jsx';
+import LogoutButton from '../../pages/LogoutButton';
 
 const Navbar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isLoggedIn } = useContext(AuthContext);
     const [cartItems] = useState(3);
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -18,7 +25,7 @@ const Navbar = () => {
                             <img
                                 src={rajuChicken}
                                 alt="Raju Chicken Logo"
-                                className="h-12 w-auto"  // Adjusted height for better proportion
+                                className="h-12 w-auto"
                             />
                             <span className="ml-2 text-xl uppercase font-extrabold text-gray-800 hidden md:block tracking-wide">
                                 Raju Chicken
@@ -42,23 +49,18 @@ const Navbar = () => {
 
                     {/* Right Section */}
                     <div className="flex items-center space-x-4">
-                        {/* Auth */}
-                        <button
-                            onClick={() => setIsLoggedIn(!isLoggedIn)}
-                            className="group flex items-center p-2 text-gray-700 hover:text-orange-600 transition-colors"
-                        >
-                            {isLoggedIn ? (
-                                <>
-                                    <UserGroupIcon className="h-6 w-6 text-gray-500" />
-                                    <span className="ml-2 hidden md:inline">Logout</span>
-                                </>
-                            ) : (
-                                <>
-                                    <UserIcon className="h-6 w-6 text-gray-500" />
-                                    <span className="ml-2 hidden md:inline">Login</span>
-                                </>
-                            )}
-                        </button>
+                        {/* Auth Section */}
+                        {isLoggedIn ? (
+                            <LogoutButton />
+                        ) : (
+                            <Link
+                                to="/login"
+                                className="group flex items-center p-2 text-gray-700 hover:text-orange-600 transition-colors"
+                            >
+                                <UserIcon className="h-6 w-6 text-gray-500" />
+                                <span className="ml-2 hidden md:inline">Login</span>
+                            </Link>
+                        )}
 
                         {/* Cart */}
                         <Link

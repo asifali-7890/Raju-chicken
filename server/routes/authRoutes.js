@@ -1,11 +1,9 @@
-// authRoutes.js
-
 import express from 'express';
+import { sendOTP, verifyOTP } from '../controllers/authController.js';
+
 const router = express.Router();
 
-// Your route logic
-router.post('/login', (req, res) => {
-    // Handle login
-});
+router.post('/send-otp', sendOTP);
+router.post('/verify-otp', verifyOTP);
 
-export default router; // Use 'export default' to match the ES module import
+export default router;

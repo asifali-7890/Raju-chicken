@@ -1,32 +1,29 @@
 import mongoose from 'mongoose';
-import validator from 'validator';
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, 'Please enter your name']
-    },
     email: {
         type: String,
         required: [true, 'Please enter your email'],
         unique: true,
-        validate: [validator.isEmail, 'Please enter a valid email']
+        lowercase: true,
+        trim: true,
     },
-    password: {
-        type: String,
-        required: [true, 'Please enter a password'],
-        minlength: [8, 'Password must be at least 8 characters'],
-        select: false
+    otp: {
+        type: String, // Store the generated OTP (for simplicity, stored as plain text)
+        select: false,
     },
-    role: {
-        type: String,
-        enum: ['user', 'admin'],
-        default: 'user'
+    otpExpire: {
+        type: Date,
+    },
+    isVerified: {
+        type: Boolean,
+        default: false,
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     }
 });
 
-export default mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+export default User;
