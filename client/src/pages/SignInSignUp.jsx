@@ -56,7 +56,7 @@ const SignInSignUp = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+        <div className="min-h-100 flex items-center justify-center bg-gray-100 p-4">
             <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Sign In / Sign Up</h2>
                 {message && <div className="bg-green-200 text-green-800 p-2 mb-4 rounded">{message}</div>}

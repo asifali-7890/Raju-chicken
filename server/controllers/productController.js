@@ -1,77 +1,28 @@
 import Product from '../models/Product.js';
-import asyncHandler from 'express-async-handler';
 
-// @desc    Create new product
-// @route   POST /api/products
-// @access  Private/Admin
-export const createProduct = asyncHandler(async (req, res) => {
-    const { name, description, price, weight } = req.body;
-
-    const product = await Product.create({
-        name,
-        description,
-        price,
-        weight,
-        image: req.body.image || {}
-    });
-
-    res.status(201).json(product);
-});
-
-// @desc    Get all products
-// @route   GET /api/products
-// @access  Public
-export const getProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({});
-    res.json(products);
-});
-
-// @desc    Get single product
-// @route   GET /api/products/:id
-// @access  Public
-export const getProductById = asyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
-
-    if (product) {
-        res.json(product);
-    } else {
-        res.status(404);
-        throw new Error('Product not found');
+// GET /api/products - Retrieve all products
+export const getAllProducts = async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.json({ success: true, products });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
     }
-});
+};
 
-// @desc    Update product
-// @route   PUT /api/products/:id
-// @access  Private/Admin
-export const updateProduct = asyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
-
-    if (product) {
-        product.name = req.body.name || product.name;
-        product.description = req.body.description || product.description;
-        product.price = req.body.price || product.price;
-        product.weight = req.body.weight || product.weight;
-        product.image = req.body.image || product.image;
-
-        const updatedProduct = await product.save();
-        res.json(updatedProduct);
-    } else {
-        res.status(404);
-        throw new Error('Product not found');
+// POST /api/products - Create a new product
+export const createProduct = async (req, res) => {
+    try {
+        const { name, description, weight, price, image } = req.body;
+        const newProduct = await Product.create({
+            name,
+            description,
+            weight,
+            price,
+            image,
+        });
+        res.status(201).json({ success: true, product: newProduct });
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
     }
-});
-
-// @desc    Delete product
-// @route   DELETE /api/products/:id
-// @access  Private/Admin
-export const deleteProduct = asyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
-
-    if (product) {
-        await product.deleteOne();
-        res.json({ message: 'Product removed' });
-    } else {
-        res.status(404);
-        throw new Error('Product not found');
-    }
-});
+};

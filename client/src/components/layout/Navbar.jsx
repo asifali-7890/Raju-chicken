@@ -9,11 +9,14 @@ import {
 import rajuChicken from '../../assets/images/rajuChicken.png';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import LogoutButton from '../../pages/LogoutButton';
+import { CartContext } from '../../context/CartContext.jsx';
+
 
 const Navbar = () => {
     const { isLoggedIn } = useContext(AuthContext);
-    const [cartItems] = useState(3);
     const [searchQuery, setSearchQuery] = useState('');
+    const { cartItems } = useContext(CartContext);
+    // const [cartItems] = useState(3);
 
     return (
         <nav className="bg-white shadow-lg">
@@ -68,9 +71,9 @@ const Navbar = () => {
                             className="group flex items-center p-2 text-gray-700 hover:text-orange-600 transition-colors"
                         >
                             <ShoppingCartIcon className="h-6 w-6" />
-                            {cartItems > 0 && (
+                            {cartItems.length > 0 && (
                                 <span className="ml-1 text-sm font-medium bg-orange-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
-                                    {cartItems}
+                                    {cartItems.length}
                                 </span>
                             )}
                             <span className="sr-only">Cart</span>

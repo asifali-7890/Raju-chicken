@@ -1,15 +1,17 @@
-// src/pages/LogoutButton.js
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext.jsx';
+import { AuthContext } from '../context/AuthContext';
+import { CartContext } from '../context/CartContext';
 
 const LogoutButton = () => {
     const { logout } = useContext(AuthContext);
+    const { clearCart } = useContext(CartContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        logout();
-        navigate('/login'); // or navigate('/') if you want to redirect to home after logout
+        logout();       // Remove token and update auth state
+        clearCart();    // Clear the cart state
+        navigate('/login'); // Redirect to login page (or home page if you prefer)
     };
 
     return (

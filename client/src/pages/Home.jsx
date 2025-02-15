@@ -1,10 +1,9 @@
+import ProductList from "./ProductList"
 
 
 const Home = () => {
     return (
-        <div>
-            ASIF ALI HOME
-        </div>
+        <ProductList />
     )
 }
 
