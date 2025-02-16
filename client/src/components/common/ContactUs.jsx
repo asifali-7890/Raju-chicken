@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { fadeIn, staggerContainer } from '../../utils/motion';
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
@@ -37,6 +38,8 @@ const ContactUs = () => {
                     message: 'Message sent successfully!',
                     key: Date.now()
                 });
+                // Show success toast
+                toast.success('Message sent successfully!');
 
                 setFormData({
                     name: '',
@@ -79,7 +82,7 @@ const ContactUs = () => {
                 </motion.div>
 
                 {/* Status Messages */}
-                {submitStatus && (
+                {/* {submitStatus && (
                     <motion.div
                         variants={fadeIn('up', 'tween', 0.2, 1)}
                         className={`p-4 rounded-lg mb-6 ${submitStatus.type === 'success'
@@ -89,7 +92,7 @@ const ContactUs = () => {
                     >
                         {submitStatus.message}
                     </motion.div>
-                )}
+                )} */}
 
                 {/* Contact Content */}
                 <motion.div
@@ -157,7 +160,10 @@ const ContactUs = () => {
 
 
                     {/* Updated Contact Form */}
+
                     <div className="bg-white p-8 rounded-2xl shadow-xl">
+                        {/* Toaster Component to show notifications */}
+                        <Toaster />
                         <h2 className="text-3xl font-bold text-pink-900 mb-8">Send Us a Message</h2>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
