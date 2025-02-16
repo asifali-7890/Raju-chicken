@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { motion } from 'framer-motion';
-import { FiPackage, FiInfo, FiDollarSign, FiUpload, FiXCircle } from 'react-icons/fi';
+import { FiUploadCloud, FiX, FiCheckCircle } from 'react-icons/fi';
 import { ImSpinner8 } from 'react-icons/im';
 
 const AdminPanel = () => {
@@ -10,7 +9,7 @@ const AdminPanel = () => {
         description: '',
         weight: '',
         price: '',
-        imageFile: null
+        image: null
     });
     const [previewImage, setPreviewImage] = useState('');
     const [message, setMessage] = useState('');
@@ -25,7 +24,7 @@ const AdminPanel = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setFormData(prev => ({ ...prev, imageFile: file }));
+            setFormData(prev => ({ ...prev, image: file }));
             setPreviewImage(URL.createObjectURL(file));
         }
     };
@@ -36,7 +35,7 @@ const AdminPanel = () => {
             description: '',
             weight: '',
             price: '',
-            imageFile: null
+            image: null
         });
         setPreviewImage('');
         setMessage('');
@@ -71,52 +70,39 @@ const AdminPanel = () => {
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
-        >
-            <div className="max-w-3xl mx-auto space-y-8">
-                <div className="text-center">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Product Management</h1>
-                    <p className="text-gray-600">Create new product entries for your inventory</p>
-                </div>
-
+        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto">
                 <div className="bg-white rounded-2xl shadow-xl p-8">
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-bold text-gray-900">Create New Product</h1>
+                        <p className="text-gray-600 mt-2">Fill in the details below to add a new product</p>
+                    </div>
+
                     {message && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="bg-green-100 text-green-700 p-4 rounded-lg mb-6 flex items-center"
-                        >
-                            <FiInfo className="mr-2" />
+                        <div className="mb-6 p-4 bg-green-50 rounded-lg flex items-center text-green-700">
+                            <FiCheckCircle className="w-5 h-5 mr-2" />
                             {message}
-                        </motion.div>
+                        </div>
                     )}
 
                     {error && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="bg-red-100 text-red-700 p-4 rounded-lg mb-6 flex items-center"
-                        >
-                            <FiInfo className="mr-2" />
+                        <div className="mb-6 p-4 bg-red-50 rounded-lg flex items-center text-red-700">
+                            <FiX className="w-5 h-5 mr-2" />
                             {error}
-                        </motion.div>
+                        </div>
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Name Field */}
-                            <div className="space-y-2">
-                                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                                    <FiPackage className="mr-2 text-gray-400" />
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Product Name
                                 </label>
                                 <input
                                     type="text"
                                     name="name"
-                                    className="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                                     value={formData.name}
                                     onChange={handleInputChange}
                                     required
@@ -124,15 +110,14 @@ const AdminPanel = () => {
                             </div>
 
                             {/* Weight Field */}
-                            <div className="space-y-2">
-                                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                                    <FiPackage className="mr-2 text-gray-400" />
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Weight
                                 </label>
                                 <input
                                     type="text"
                                     name="weight"
-                                    className="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                                     value={formData.weight}
                                     onChange={handleInputChange}
                                     placeholder="e.g. 800g"
@@ -142,15 +127,14 @@ const AdminPanel = () => {
                         </div>
 
                         {/* Description Field */}
-                        <div className="space-y-2">
-                            <label className="block text-sm font-medium text-gray-700 flex items-center">
-                                <FiInfo className="mr-2 text-gray-400" />
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Description
                             </label>
                             <textarea
                                 name="description"
                                 rows="3"
-                                className="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                                 value={formData.description}
                                 onChange={handleInputChange}
                                 required
@@ -159,15 +143,14 @@ const AdminPanel = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Price Field */}
-                            <div className="space-y-2">
-                                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                                    <FiDollarSign className="mr-2 text-gray-400" />
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Price (₹)
                                 </label>
                                 <input
                                     type="number"
                                     name="price"
-                                    className="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                                     value={formData.price}
                                     onChange={handleInputChange}
                                     min="0"
@@ -176,17 +159,18 @@ const AdminPanel = () => {
                             </div>
 
                             {/* Image Upload */}
-                            <div className="space-y-2">
-                                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                                    <FiUpload className="mr-2 text-gray-400" />
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Product Image
                                 </label>
                                 <div className="flex items-center space-x-4">
-                                    <label className="flex flex-col items-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-orange-500 transition-colors">
-                                        <FiUpload className="w-6 h-6 text-gray-400 mb-2" />
-                                        <span className="text-sm text-gray-600">
-                                            {formData.imageFile ? formData.imageFile.name : 'Choose file'}
-                                        </span>
+                                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-orange-500 transition-colors">
+                                        <div className="text-center">
+                                            <FiUploadCloud className="w-6 h-6 text-gray-400 mx-auto" />
+                                            <span className="text-sm text-gray-600 mt-2">
+                                                {formData.image ? formData.image.name : 'Click to upload'}
+                                            </span>
+                                        </div>
                                         <input
                                             type="file"
                                             name="image"
@@ -201,17 +185,17 @@ const AdminPanel = () => {
                                             <img
                                                 src={previewImage}
                                                 alt="Preview"
-                                                className="w-16 h-16 rounded-lg object-cover"
+                                                className="w-16 h-16 rounded-lg object-cover border"
                                             />
                                             <button
                                                 type="button"
                                                 onClick={() => {
-                                                    setFormData(prev => ({ ...prev, imageFile: null }));
+                                                    setFormData(prev => ({ ...prev, image: null }));
                                                     setPreviewImage('');
                                                 }}
                                                 className="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow-sm hover:text-red-600"
                                             >
-                                                <FiXCircle className="w-5 h-5" />
+                                                <FiX className="w-5 h-5" />
                                             </button>
                                         </div>
                                     )}
@@ -245,7 +229,7 @@ const AdminPanel = () => {
                     </form>
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 };
 
