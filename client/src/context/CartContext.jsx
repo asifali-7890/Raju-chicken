@@ -8,19 +8,33 @@ export const CartProvider = ({ children }) => {
     const { isLoggedIn } = useContext(AuthContext);
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    axios.defaults.withCredentials = true;
 
     // Fetch cart from backend on mount
+    // context/CartContext.jsx
     useEffect(() => {
         const fetchCart = async () => {
             try {
+                if (!isLoggedIn) {
+                    setCartItems([]);
+                    setLoading(false);
+                    return;
+                }
+
                 const res = await axios.get('/api/cart', {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` },
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    }
                 });
+
                 if (res.data.success) {
-                    setCartItems(res.data.cart.items);
+                    setCartItems(res.data.cart.items || []);
                 }
             } catch (error) {
                 console.error('Error fetching cart:', error);
+                if (error.response?.status === 401) {
+                    // Handle logout or token refresh here
+                }
             }
             setLoading(false);
         };
@@ -30,11 +44,16 @@ export const CartProvider = ({ children }) => {
 
     const addToCart = async (product) => {
         try {
-            console.log('testing addToCart');
+            // console.log('testing addToCart');
             const res = await axios.post(
                 '/api/cart/add',
                 { productId: product._id },
-                { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } }
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
             );
             if (res.data.success) {
                 setCartItems(res.data.cart.items);

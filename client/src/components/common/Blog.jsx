@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { CalendarIcon, UserIcon, TagIcon, BookOpenIcon } from '@heroicons/react/24/outline';
 
 const Blog = () => {

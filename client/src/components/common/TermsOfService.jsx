@@ -5,7 +5,7 @@ import { staggerContainer, fadeIn } from '../../utils/motion';
 
 const TermsOfService = () => {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 py-16 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 pb-16 px-4 sm:px-6 lg:px-8">
             <motion.div
                 variants={staggerContainer}
                 initial="hidden"

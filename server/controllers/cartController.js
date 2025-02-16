@@ -1,24 +1,44 @@
 import Cart from '../models/Cart.js';
 import Product from '../models/Product.js';
 
-// Get cart for logged-in user
+// controllers/cartController.js
 export const getCart = async (req, res) => {
+    // console.log('getCart');
     try {
-        const userId = req.user._id; // Assuming req.user is set from auth middleware
-        let cart = await Cart.findOne({ user: userId }).populate('items.product');
-        if (!cart) {
-            // Create a cart if one doesn't exist
-            cart = await Cart.create({ user: userId, items: [] });
+        const userId = req.user?._id;
+
+        if (!userId) {
+            return res.status(401).json({
+                success: false,
+                error: 'User not authenticated'
+            });
         }
-        res.json({ success: true, cart });
+
+        let cart = await Cart.findOne({ user: userId })
+            .populate('items.product')
+            .lean();
+
+        if (!cart) {
+            cart = await Cart.create({ user: userId, items: [] });
+            cart = await Cart.findById(cart._id).populate('items.product');
+        }
+
+        res.status(200).json({
+            success: true,
+            cart
+        });
     } catch (error) {
-        console.error('Error fetching cart:', error);
-        res.status(500).json({ success: false, error: error.message });
+        console.error('Error in getCart:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Server error'
+        });
     }
 };
 
 // Add a product to cart (or increment quantity if already in cart)
 export const addToCart = async (req, res) => {
+    // console.log('addToCart');
     try {
         const userId = req.user._id;
         const { productId } = req.body;

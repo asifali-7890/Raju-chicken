@@ -12,11 +12,34 @@ import { fileURLToPath } from 'url';
 // Connect to database
 connectDB();
 
+// Routes
+import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import contactRouter from './routes/contact.js';
+// ...
+const app = express();
+
+// Middleware
+app.use(express.json()); // Must come first
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+
+app.use('/api', contactRouter);
+app.use('/api/cart', cartRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/admin', adminRoutes);
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
-const app = express();
+
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
@@ -28,28 +51,19 @@ app.get('*', (req, res) => {
 
 
 // Middleware
-app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true
-}));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(
+    cors({
+        origin: [
+            'https://raju-chicken.onrender.com',
+            'http://localhost:5173'
+        ],
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true
+    })
+);
 
-// Routes
-import authRoutes from './routes/authRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
-import cartRoutes from './routes/cartRoutes.js';
-import contactRouter from './routes/contact.js';
-// ...
-app.use('/api', contactRouter);
-app.use('/api/cart', cartRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/admin', adminRoutes);
+
+
 // Error handling
 app.use(errorHandler);
 

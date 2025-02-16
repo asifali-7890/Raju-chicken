@@ -30,7 +30,7 @@ const Navbar = () => {
                             <img
                                 src={rajuChicken}
                                 alt="Raju Chicken Logo"
-                                className="h-12 w-auto"
+                                className="h-18 mt-3 w-auto object-cover"
                             />
                             <span className="ml-2 text-xl uppercase font-extrabold text-gray-800 hidden md:block tracking-wide">
                                 Raju Chicken

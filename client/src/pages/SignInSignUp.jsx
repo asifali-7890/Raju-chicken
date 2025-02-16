@@ -67,24 +67,24 @@ const SignInSignUp = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl flex flex-col md:flex-row overflow-hidden">
+        <div className="min-h-screen  bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl flex flex-col justify-center  md:flex-row overflow-hidden">
                 {/* Illustration Section */}
-                <div className="md:w-1/2 bg-gradient-to-br from-blue-600 to-indigo-700 p-8 hidden md:flex flex-col justify-center items-center text-white">
+                {/* <div className="md:w-1/2 bg-gradient-to-br from-blue-600 to-indigo-700 p-8 hidden md:flex flex-col justify-center items-center text-white">
                     <img
                         src="/images/auth-illustration.svg"
                         alt="Secure Login"
                         className="w-64 h-64 mb-8"
                     />
-                    <h3 className="text-2xl font-bold mb-4">Secure Access</h3>
-                    <p className="text-center text-blue-100">
+                    <h3 className="text-2xl hidden font-bold mb-4">Secure Access</h3>
+                    <p className="text-center hidden text-blue-100">
                         Your security is our priority. Experience seamless authentication with our
                         encrypted OTP verification system.
                     </p>
-                </div>
+                </div> */}
 
                 {/* Form Section */}
-                <div className="md:w-1/2 p-8 md:p-12">
+                <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center ">
                     <div className="text-center mb-8">
                         <h2 className="text-3xl font-bold text-gray-800 mb-2">
                             {otpSent ? 'Verify Identity' : 'Welcome Back'}
@@ -92,7 +92,7 @@ const SignInSignUp = () => {
                         <p className="text-gray-600">
                             {otpSent
                                 ? 'Enter the 6-digit code sent to your email'
-                                : 'Sign in or create an account to continue'}
+                                : 'Sign in to continue'}
                         </p>
                     </div>
 
@@ -143,7 +143,7 @@ const SignInSignUp = () => {
                                 ) : 'Continue with Email'}
                             </button>
 
-                            <div className="relative">
+                            <div className="relative hidden">
                                 <div className="absolute inset-0 flex items-center">
                                     <div className="w-full border-t border-gray-300"></div>
                                 </div>
@@ -152,7 +152,7 @@ const SignInSignUp = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-2 gap-3 hidden">
                                 <button
                                     type="button"
                                     className="flex items-center justify-center w-full bg-gray-100 text-gray-700 py-2.5 rounded-lg hover:bg-gray-200 transition-colors"
@@ -213,7 +213,7 @@ const SignInSignUp = () => {
                                 ) : 'Verify Account'}
                             </button>
 
-                            <div className="text-center text-sm text-gray-600">
+                            <div className="text-center hidden text-sm text-gray-600">
                                 Didn't receive code?{' '}
                                 <button
                                     type="button"
