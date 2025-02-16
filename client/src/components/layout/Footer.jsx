@@ -1,7 +1,9 @@
-import { Grid, Typography, Container, Box, Link } from '@mui/material';
+// src/components/Footer.jsx
+import { Grid, Typography, Container, Box, Link as MuiLink } from '@mui/material';
 import { motion } from 'framer-motion';
 import { styled } from '@mui/material/styles';
 import { Favorite, Security, LocalOffer } from '@mui/icons-material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const StyledFooter = styled('footer')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -15,6 +17,45 @@ const TrustBadge = styled(motion.div)(({ theme }) => ({
     backgroundColor: theme.palette.grey[100],
     borderRadius: theme.shape.borderRadius,
 }));
+
+// Define footer links with title, items, and each item has a name and a route.
+const footerLinks = [
+    {
+        title: "Company",
+        items: [
+            { name: "About Us", route: "/about-us" },
+            { name: "Vision", route: "/vision" },
+            { name: "Mission", route: "/mission" },
+            { name: "Careers", route: "/careers" }
+        ]
+    },
+    {
+        title: "Support",
+        items: [
+            { name: "Contact Us", route: "/contact-us" },
+            { name: "FAQ", route: "/faq" },
+            { name: "Service & Support", route: "/service-support" },
+            { name: "Shipping", route: "/shipping" }
+        ]
+    },
+    {
+        title: "Legal",
+        items: [
+            { name: "Policy", route: "/policy" },
+            { name: "Terms of Service", route: "/terms-of-service" },
+            { name: "CPolicy", route: "/cpolicy" }
+        ]
+    },
+    {
+        title: "Resources",
+        items: [
+            { name: "Blog", route: "/blog" },
+            { name: "Recipes", route: "/recipes" },
+            { name: "Quality Standards", route: "/quality-standards" },
+            { name: "Sustainability", route: "/sustainability" }
+        ]
+    }
+];
 
 const Footer = () => {
     const trustBadges = [
@@ -32,25 +73,6 @@ const Footer = () => {
             icon: <LocalOffer fontSize="large" color="primary" />,
             title: "Fair Pricing",
             text: "Pay only for what you buy"
-        }
-    ];
-
-    const footerLinks = [
-        {
-            title: "Company",
-            items: ["About Us", "Vision", "Mission", "Careers"]
-        },
-        {
-            title: "Support",
-            items: ["Contact Us", "FAQ", "Service & Support", "Shipping"]
-        },
-        {
-            title: "Legal",
-            items: ["Privacy Policy", "Terms of Service", "Cookie Policy"]
-        },
-        {
-            title: "Resources",
-            items: ["Blog", "Recipes", "Quality Standards", "Sustainability"]
         }
     ];
 
@@ -96,18 +118,20 @@ const Footer = () => {
                                         {section.title}
                                     </Typography>
                                     {section.items.map((item, itemIndex) => (
-                                        <Link
-                                            href="#"
+                                        <MuiLink
                                             key={itemIndex}
+                                            component={RouterLink}
+                                            to={item.route}
                                             color="textSecondary"
                                             sx={{
                                                 display: 'block',
                                                 mt: 1,
+                                                textDecoration: 'none',
                                                 '&:hover': { color: 'primary.main' }
                                             }}
                                         >
-                                            {item}
-                                        </Link>
+                                            {item.name}
+                                        </MuiLink>
                                     ))}
                                 </motion.div>
                             </Grid>
@@ -124,12 +148,30 @@ const Footer = () => {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, alignItems: 'center' }}>
-                                    <Link href="#" color="textSecondary" sx={{ '&:hover': { color: 'primary.main' } }}>
-                                        Privacy Policy
-                                    </Link>
-                                    <Link href="#" color="textSecondary" sx={{ '&:hover': { color: 'primary.main' } }}>
+                                    <MuiLink
+                                        component={RouterLink}
+                                        to="/policy"
+                                        color="textSecondary"
+                                        sx={{ '&:hover': { color: 'primary.main' } }}
+                                    >
+                                        Policy
+                                    </MuiLink>
+                                    <MuiLink
+                                        component={RouterLink}
+                                        to="/terms-of-service"
+                                        color="textSecondary"
+                                        sx={{ '&:hover': { color: 'primary.main' } }}
+                                    >
                                         Terms of Service
-                                    </Link>
+                                    </MuiLink>
+                                    <MuiLink
+                                        component={RouterLink}
+                                        to="/cpolicy"
+                                        color="textSecondary"
+                                        sx={{ '&:hover': { color: 'primary.main' } }}
+                                    >
+                                        CPolicy
+                                    </MuiLink>
                                 </Box>
                             </Grid>
                         </Grid>

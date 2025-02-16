@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
     useEffect(() => {
         const fetchCart = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/cart', {
+                const res = await axios.get('/api/cart', {
                     headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` },
                 });
                 if (res.data.success) {
@@ -32,7 +32,7 @@ export const CartProvider = ({ children }) => {
         try {
             console.log('testing addToCart');
             const res = await axios.post(
-                'http://localhost:5000/api/cart/add',
+                '/api/cart/add',
                 { productId: product._id },
                 { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } }
             );
@@ -47,7 +47,7 @@ export const CartProvider = ({ children }) => {
     const updateQuantity = async (productId, quantity) => {
         try {
             const res = await axios.post(
-                'http://localhost:5000/api/cart/update',
+                '/api/cart/update',
                 { productId, quantity },
                 { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } }
             );

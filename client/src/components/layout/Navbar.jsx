@@ -1,22 +1,24 @@
-// src/components/Navbar.js
+// src/components/layout/Navbar.js
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-    ShoppingCartIcon,
-    UserIcon,
-    MagnifyingGlassIcon,
-} from '@heroicons/react/24/outline';
+import { Link, useNavigate } from 'react-router-dom';
+import { ShoppingCartIcon, UserIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import rajuChicken from '../../assets/images/rajuChicken.png';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import LogoutButton from '../../pages/LogoutButton';
 import { CartContext } from '../../context/CartContext.jsx';
 
-
 const Navbar = () => {
     const { isLoggedIn } = useContext(AuthContext);
-    const [searchQuery, setSearchQuery] = useState('');
     const { cartItems } = useContext(CartContext);
-    // const [cartItems] = useState(3);
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearchQuery(value);
+        // Update URL query parameter to share the search term.
+        navigate(`/products?search=${encodeURIComponent(value)}`);
+    };
 
     return (
         <nav className="bg-white shadow-lg">
@@ -37,14 +39,14 @@ const Navbar = () => {
                     </div>
 
                     {/* Search Bar - Middle */}
-                    <div className="flex-1 max-w-2xl mx-4">
+                    <div className="flex-1 max-w-2xl mx-4 hidden">
                         <div className="relative">
                             <input
                                 type="text"
                                 placeholder="Search chicken products..."
                                 className="w-full px-4 py-2 pl-10 rounded-lg border border-gray-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onChange={handleSearchChange}
                             />
                             <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-3 top-3" />
                         </div>
