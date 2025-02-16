@@ -55,8 +55,8 @@ export const verifyOTP = async (req, res) => {
 
         // Check if OTP matches
 
-        console.log('Stored OTP:', typeof user.otp);
-        console.log('Entered OTP:', typeof otp);
+        // console.log('Stored OTP:', typeof user.otp);
+        // console.log('Entered OTP:', typeof otp);
 
         if (user.otp !== otp) {
             return res.status(400).json({ success: false, error: 'Invalid OTP' });

@@ -25,7 +25,7 @@ const Mission = () => {
                     We invite you to be a part of our mission. Together, we can make a difference in the food industry and contribute to a healthier planet. Follow us on our social media channels to stay updated on our latest initiatives and products.
                 </p>
                 <div className="flex justify-center">
-                    <button className="bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700 transition duration-300">
+                    <button className="bg-green-600 hidden text-white font-semibold py-2 px-4 rounded hover:bg-green-700 transition duration-300">
                         Learn More
                     </button>
                 </div>

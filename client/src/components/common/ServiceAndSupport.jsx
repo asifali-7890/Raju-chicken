@@ -1,5 +1,7 @@
 import React from 'react';
 import { FaHeadset, FaWhatsapp, FaClock, FaEnvelope, FaTools, FaComments } from 'react-icons/fa';
+import ContactUs from './ContactUs';
+import { Link } from 'react-router-dom';
 
 const ServiceAndSupport = () => {
     const faqs = [
@@ -55,9 +57,11 @@ const ServiceAndSupport = () => {
                             <h3 className="text-xl font-semibold text-gray-900">Live Chat</h3>
                         </div>
                         <p className="text-gray-600 mb-4">Instant connection with our support experts</p>
-                        <button className="bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition-colors">
-                            Start Chat
-                        </button>
+                        <Link to='/contact-us'>
+                            <button className="bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition-colors">
+                                Start Chat
+                            </button>
+                        </Link>
                     </div>
 
                     <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -68,9 +72,12 @@ const ServiceAndSupport = () => {
                             <h3 className="text-xl font-semibold text-gray-900">WhatsApp</h3>
                         </div>
                         <p className="text-gray-600 mb-4">+1 (555) 123-4567</p>
-                        <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                            Message Us
-                        </button>
+
+                        <Link to='/contact-us'>
+                            <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                Message Us
+                            </button>
+                        </Link>
                     </div>
 
                     <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -81,50 +88,20 @@ const ServiceAndSupport = () => {
                             <h3 className="text-xl font-semibold text-gray-900">Technical Support</h3>
                         </div>
                         <p className="text-gray-600 mb-4">Enterprise-grade technical assistance</p>
-                        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                            Request Support
-                        </button>
+                        <Link to='/contact-us'>
+                            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                Request Support
+                            </button>
+                        </Link>
                     </div>
                 </div>
 
                 {/* Contact Form */}
-                <div className="bg-white rounded-2xl shadow-xl p-8 mb-16">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Direct Contact Form</h2>
-                    <form className="max-w-2xl mx-auto">
-                        <div className="grid gap-6 mb-6 md:grid-cols-2">
-                            <div>
-                                <label className="block text-gray-700 mb-2">Full Name</label>
-                                <input
-                                    type="text"
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                                    placeholder="Enter your name"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 mb-2">Email Address</label>
-                                <input
-                                    type="email"
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                                    placeholder="your@email.com"
-                                />
-                            </div>
-                        </div>
-                        <div className="mb-6">
-                            <label className="block text-gray-700 mb-2">Message</label>
-                            <textarea
-                                className="w-full px-4 py-2 border rounded-lg h-32 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                                placeholder="Describe your inquiry..."
-                            ></textarea>
-                        </div>
-                        <button className="w-full bg-pink-600 text-white py-3 rounded-lg hover:bg-pink-700 transition-colors font-semibold">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
+                <ContactUs />
 
                 {/* FAQ Section */}
                 <div className="mb-16">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+                    <h2 className="text-3xl mt-3 font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
                     <div className="space-y-4 max-w-3xl mx-auto">
                         {faqs.map((faq, index) => (
                             <div key={index} className="border rounded-xl p-4 hover:border-pink-300 transition-colors">

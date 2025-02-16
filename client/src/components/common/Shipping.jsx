@@ -1,5 +1,6 @@
 
 import { TruckIcon, ClockIcon, GlobeAltIcon, CheckCircleIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
 
 const Shipping = () => {
     const faqs = [
@@ -92,7 +93,7 @@ const Shipping = () => {
                 </div>
 
                 {/* Tracking Form */}
-                <div className="bg-teal-900 rounded-2xl p-8 mb-20 text-center">
+                <div className="bg-teal-900 rounded-2xl p-8 mb-20 hidden text-center">
                     <h2 className="text-3xl font-bold text-white mb-6">Track Your Package</h2>
                     <div className="max-w-md mx-auto">
                         <div className="flex rounded-lg overflow-hidden">
@@ -130,10 +131,12 @@ const Shipping = () => {
                         customs documentation, or special delivery requests.
                     </p>
                     <div className="flex justify-center space-x-6">
-                        <button className="bg-teal-600 text-white px-8 py-3 rounded-lg hover:bg-teal-700 transition-colors duration-200">
-                            Contact Support
-                        </button>
-                        <button className="bg-white text-teal-600 px-8 py-3 rounded-lg border-2 border-teal-600 hover:bg-teal-50 transition-colors duration-200">
+                        <Link to='/contact-us'>
+                            <button className="bg-teal-600 text-white px-8 py-3 rounded-lg hover:bg-teal-700 transition-colors duration-200">
+                                Contact Support
+                            </button>
+                        </Link>
+                        <button className="bg-white hidden text-teal-600 px-8 py-3 rounded-lg border-2 border-teal-600 hover:bg-teal-50 transition-colors duration-200">
                             Shipping Policy
                         </button>
                     </div>

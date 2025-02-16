@@ -60,14 +60,14 @@ export const CartProvider = ({ children }) => {
     };
 
     const incrementQuantity = (productId) => {
-        const item = cartItems.find((i) => i.product._id === productId);
+        const item = cartItems.find((i) => i.product?._id === productId);
         if (item) {
             updateQuantity(productId, item.quantity + 1);
         }
     };
 
     const decrementQuantity = (productId) => {
-        const item = cartItems.find((i) => i.product._id === productId);
+        const item = cartItems.find((i) => i.product?._id === productId);
         if (item) {
             updateQuantity(productId, item.quantity - 1);
         }

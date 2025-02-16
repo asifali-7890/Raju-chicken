@@ -3,6 +3,7 @@ import { GiSeedling, GiStarMedal } from 'react-icons/gi';
 import { MdOutlineHandshake, MdTimeline } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import { fadeIn, staggerContainer } from '../../utils/motion'; // Create motion configs
+import { Link } from 'react-router-dom';
 
 const Vision = () => {
     return (
@@ -130,10 +131,12 @@ const Vision = () => {
                             Become part of the sustainable agriculture revolution. Let's build a better future together.
                         </p>
                         <div className="flex justify-center space-x-6">
-                            <button className="bg-white text-purple-900 px-8 py-3 rounded-full font-semibold hover:bg-purple-50 transition-colors">
-                                Partner With Us
-                            </button>
-                            <button className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
+                            <Link to='/contact-us'>
+                                <button className="bg-white text-purple-900 px-8 py-3 rounded-full font-semibold hover:bg-purple-50 transition-colors">
+                                    Partner With Us
+                                </button>
+                            </Link>
+                            <button className="border-2 hidden border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
                                 Learn More
                             </button>
                         </div>

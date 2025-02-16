@@ -1,9 +1,60 @@
-import React from 'react';
+
+
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { fadeIn, staggerContainer } from '../../utils/motion';
+import axios from 'axios';
 
 const ContactUs = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus(null);
+
+        try {
+            const response = await axios.post('/api/contact', formData);
+
+            if (response.data.success) {
+                setSubmitStatus({
+                    type: 'success',
+                    message: 'Message sent successfully!',
+                    key: Date.now()
+                });
+
+                setFormData({
+                    name: '',
+                    email: '',
+                    subject: '',
+                    message: ''
+                });
+            }
+        } catch (error) {
+            setSubmitStatus({
+                type: 'error',
+                message: error.response?.data?.message || 'Failed to send message. Please try again.'
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-pink-50 to-pink-100 py-16 px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -13,6 +64,7 @@ const ContactUs = () => {
                 viewport={{ once: true, amount: 0.25 }}
                 className="max-w-7xl mx-auto"
             >
+                {/* ... (keep existing header section) ... */}
                 {/* Header Section */}
                 <motion.div
                     variants={fadeIn('up', 'tween', 0.2, 1)}
@@ -26,11 +78,25 @@ const ContactUs = () => {
                     </p>
                 </motion.div>
 
+                {/* Status Messages */}
+                {submitStatus && (
+                    <motion.div
+                        variants={fadeIn('up', 'tween', 0.2, 1)}
+                        className={`p-4 rounded-lg mb-6 ${submitStatus.type === 'success'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-red-100 text-red-700'
+                            }`}
+                    >
+                        {submitStatus.message}
+                    </motion.div>
+                )}
+
                 {/* Contact Content */}
                 <motion.div
                     variants={fadeIn('up', 'tween', 0.4, 1)}
                     className="grid md:grid-cols-2 gap-12 mb-16"
                 >
+                    {/* ... (keep existing contact information section) ... */}
                     {/* Contact Information */}
                     <div className="bg-white p-8 rounded-2xl shadow-xl">
                         <h2 className="text-3xl font-bold text-pink-900 mb-8">Contact Information</h2>
@@ -89,14 +155,18 @@ const ContactUs = () => {
                         </div>
                     </div>
 
-                    {/* Contact Form */}
+
+                    {/* Updated Contact Form */}
                     <div className="bg-white p-8 rounded-2xl shadow-xl">
                         <h2 className="text-3xl font-bold text-pink-900 mb-8">Send Us a Message</h2>
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label className="block text-pink-700 mb-2">Your Name</label>
                                 <input
                                     type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     className="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                                     placeholder="Enter your name"
                                     required
@@ -107,6 +177,9 @@ const ContactUs = () => {
                                 <label className="block text-pink-700 mb-2">Email Address</label>
                                 <input
                                     type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                                     placeholder="Enter your email"
                                     required
@@ -117,6 +190,9 @@ const ContactUs = () => {
                                 <label className="block text-pink-700 mb-2">Subject</label>
                                 <input
                                     type="text"
+                                    name="subject"
+                                    value={formData.subject}
+                                    onChange={handleChange}
                                     className="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                                     placeholder="Enter subject"
                                     required
@@ -127,6 +203,9 @@ const ContactUs = () => {
                                 <label className="block text-pink-700 mb-2">Message</label>
                                 <textarea
                                     rows="4"
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
                                     className="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                                     placeholder="Type your message here..."
                                     required
@@ -135,14 +214,43 @@ const ContactUs = () => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-pink-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-pink-700 transition-colors"
+                                disabled={isSubmitting}
+                                className="w-full bg-pink-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-pink-700 transition-colors disabled:opacity-50 flex justify-center items-center"
                             >
-                                Send Message
+                                {isSubmitting ? (
+                                    <>
+                                        <svg
+                                            className="animate-spin h-5 w-5 mr-3 text-white"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            ></circle>
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                                            ></path>
+                                        </svg>
+                                        Sending...
+                                    </>
+                                ) : (
+                                    'Send Message'
+                                )}
                             </button>
+
                         </form>
                     </div>
                 </motion.div>
 
+                {/* ... (keep existing map section) ... */}
                 {/* Map Section */}
                 <motion.div
                     variants={fadeIn('up', 'tween', 0.6, 1)}

@@ -29,6 +29,7 @@ import Blog from './components/common/Blog';
 import Recipes from './components/common/Recipes';
 import QualityStandards from './components/common/QualityStandards';
 import Sustainability from './components/common/Sustainability';
+import ScrollToTop from './pages/ScrollToTop.jsx';
 
 const App = () => {
   return (
@@ -83,6 +84,7 @@ const App = () => {
             <Route path="/sustainability" element={<Sustainability />} />
           </Routes>
         </main>
+        <ScrollToTop />
         <Footer />
       </div>
     </Router>

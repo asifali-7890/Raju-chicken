@@ -38,7 +38,8 @@ const ProductDetail = () => {
         fetchProduct();
     }, [id]);
 
-    const existingItem = cartItems.find((item) => item.product._id === product?._id);
+    // Check if the current product is already in the cart
+    const existingItem = cartItems.find(item => item?.product && item.product?._id === product?._id);
     const oldPrice = product ? Math.round(product.price * 1.3) : 0;
     const discountPercentage = ((oldPrice - product?.price) / oldPrice * 100).toFixed(0);
 

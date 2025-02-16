@@ -2,11 +2,11 @@ import Product from '../models/Product.js';
 
 export const createProductAdmin = async (req, res) => {
     try {
-        console.log('Request body:', req.body);
-        console.log('Uploaded file:', req.file);
+        // console.log('Request body:', req.body);
+        // console.log('Uploaded file:', req.file);
         const { name, description, weight, price } = req.body;
         const imageUrl = req.file?.path; // Cloudinary URL
-        console.log('Uploading image:', imageUrl);
+        // console.log('Uploading image:', imageUrl);
         if (!imageUrl) {
             return res.status(400).json({ success: false, error: 'Image upload failed' });
         }
@@ -30,7 +30,7 @@ export const createProductAdmin = async (req, res) => {
 // GET /api/products/:id
 export const getProductById = async (req, res) => {
     try {
-        console.log('Its checking here..');
+        // console.log('Its checking here..');
         const productId = req.params.id;
         const product = await Product.findById(productId);
 

@@ -6,6 +6,7 @@ import teamMember1 from '../../assets/team1.png'; // Add your actual image paths
 import teamMember2 from '../../assets/team2.png';
 import teamMember3 from '../../assets/team3.png';
 import team4 from '../../assets/team4.png';
+import { Link } from 'react-router-dom';
 
 const AboutUs = () => {
     const fadeIn = {
@@ -133,9 +134,11 @@ const AboutUs = () => {
                         <MdSupportAgent className="text-6xl mx-auto mb-6 text-blue-200" />
                         <h2 className="text-3xl font-bold mb-4">Have Questions?</h2>
                         <p className="text-xl mb-8">Our team is here to help 24/7</p>
-                        <button className="bg-white text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors">
-                            Contact Support
-                        </button>
+                        <Link to='/contact-us'>
+                            <button className="bg-white text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors">
+                                Contact Support
+                            </button>
+                        </Link>
                     </div>
                 </motion.div>
             </motion.div>

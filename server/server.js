@@ -6,10 +6,22 @@ import connectDB from './config/db.js';
 import errorHandler from './middleware/errorMiddleware.js';
 import dotenv from 'dotenv';
 dotenv.config();  // Make sure this is at the top
-
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Connect to database
 connectDB();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
+
 
 const app = express();
 
@@ -19,6 +31,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
@@ -27,7 +40,9 @@ import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import contactRouter from './routes/contact.js';
 // ...
+app.use('/api', contactRouter);
 app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);

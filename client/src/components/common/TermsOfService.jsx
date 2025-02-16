@@ -170,7 +170,7 @@ const TermsOfService = () => {
                             By using our services, you acknowledge that you have read, understood,
                             and agree to be bound by these Terms.
                         </p>
-                        <button className="bg-white text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors">
+                        <button className="bg-white hidden text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors">
                             Confirm Understanding
                         </button>
                     </motion.section>

@@ -62,7 +62,7 @@ const Blog = () => {
                                 Explore how AI-driven monitoring systems and IoT-enabled devices are revolutionizing
                                 poultry health management and operational efficiency in modern farms...
                             </p>
-                            <button className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition-colors duration-200">
+                            <button className="bg-indigo-600 hidden text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition-colors duration-200">
                                 Read Full Article
                             </button>
                         </div>
@@ -73,7 +73,7 @@ const Blog = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                     {popularPosts.map((post, index) => (
                         <article key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <div className="h-48 bg-indigo-100 rounded-lg mb-4" />
+                            {/* <div className="h-48 bg-indigo-100 rounded-lg mb-4" /> */}
                             <div className="flex items-center space-x-2 mb-4">
                                 <TagIcon className="h-5 w-5 text-indigo-600" />
                                 <span className="text-indigo-600 font-medium">{post.category}</span>
@@ -86,7 +86,6 @@ const Blog = () => {
                                     <span>{post.date}</span>
                                 </div>
                                 <button className="flex items-center text-indigo-600 hover:text-indigo-800">
-                                    Read More
                                     <BookOpenIcon className="h-5 w-5 ml-2" />
                                 </button>
                             </div>
@@ -95,7 +94,7 @@ const Blog = () => {
                 </div>
 
                 {/* Categories & Newsletter */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 hidden">
                     {/* Categories */}
                     <div className="lg:col-span-2 bg-white p-8 rounded-2xl shadow-lg">
                         <h2 className="text-3xl font-bold text-indigo-900 mb-6">Explore Categories</h2>
@@ -134,7 +133,7 @@ const Blog = () => {
                 <div className="bg-white rounded-2xl shadow-lg p-8 mb-16">
                     <div className="flex items-center flex-col md:flex-row">
                         <img
-                            src="https://images.unsplash.com/photo-1556157382-97daa53a26bd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                            src="https://www.rushu.rush.edu/sites/default/files/styles/faculty_profile/public/legacy/Rush%20Medical%20College/chen_michael_rmc.jpg?itok=wSqeNcrK"
                             alt="Expert Author"
                             className="w-32 h-32 rounded-full object-cover mb-6 md:mb-0 md:mr-8"
                         />

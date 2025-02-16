@@ -1,5 +1,6 @@
 // src/components/common/Sustainability.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sustainability = () => {
     return (
@@ -29,9 +30,11 @@ const Sustainability = () => {
                 </p>
 
                 <div className="flex justify-center">
-                    <button className="bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700 transition duration-300">
-                        Get Involved
-                    </button>
+                    <Link to='/contact-us'>
+                        <button className="bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700 transition duration-300">
+                            Get Involved
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ import { sendOrderConfirmationEmail } from '../utils/sendEmail.js';
 export const checkout = async (req, res) => {
     try {
         const userId = req.user._id; // Provided by auth middleware
+        const taxRate = 0.18; // 18% GST
+        const shippingFee = 49; // Fixed shipping cost
 
         // Find the cart for the user and populate the product details
         let cart = await Cart.findOne({ user: userId }).populate('items.product');
@@ -13,10 +15,14 @@ export const checkout = async (req, res) => {
         }
 
         // Calculate the total price
-        const total = cart.items.reduce(
+        const subtotal = cart.items.reduce(
             (sum, item) => sum + item.product.price * item.quantity,
             0
         );
+
+        const tax = subtotal * taxRate;
+        const total = subtotal + tax + shippingFee;
+
 
         // Create a new order using the cart items
         const order = await Order.create({
