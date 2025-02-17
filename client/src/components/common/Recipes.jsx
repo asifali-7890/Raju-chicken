@@ -75,32 +75,37 @@ const Recipes = () => {
                 </div>
 
                 {/* Search and Filters */}
-                <div className="mb-12">
-                    <div className="relative max-w-2xl mx-auto mb-8">
-                        <input
-                            type="text"
-                            placeholder="Search recipes..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3 rounded-full border border-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                        />
-                        <FaSearch className="absolute left-4 top-4 text-amber-500 text-xl" />
-                    </div>
+                {/* Sticky Search and Filters */}
+                <div className="sticky top-16 bg-white z-30 pt-4 pb-4 shadow-sm mb-12">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        {/* Search Bar */}
+                        <div className="relative max-w-2xl mx-auto mb-1">
+                            <input
+                                type="text"
+                                placeholder="Search recipes..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3 rounded-full border border-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent shadow-sm"
+                            />
+                            <FaSearch className="absolute left-4 top-4 text-amber-500 text-xl" />
+                        </div>
 
-                    <div className="flex flex-wrap justify-center gap-3">
-                        {categories.map((category, index) => (
-                            <button
-                                key={index}
-                                onClick={() => setSelectedCategory(category)}
-                                className={`px-4 py-2 rounded-full transition-colors flex items-center ${selectedCategory === category
-                                    ? 'bg-amber-500 text-white'
-                                    : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
-                                    }`}
-                            >
-                                <FaUtensils className="mr-2" />
-                                {category.charAt(0).toUpperCase() + category.slice(1)}
-                            </button>
-                        ))}
+                        {/* Filters */}
+                        <div className="flex hidden flex-wrap justify-center gap-3 overflow-x-auto pb-2">
+                            {categories.map((category, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setSelectedCategory(category)}
+                                    className={`px-4 py-2 rounded-full transition-colors flex items-center whitespace-nowrap ${selectedCategory === category
+                                        ? 'bg-amber-500 text-white shadow-md'
+                                        : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                                        }`}
+                                >
+                                    <FaUtensils className="mr-2 text-sm" />
+                                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
 

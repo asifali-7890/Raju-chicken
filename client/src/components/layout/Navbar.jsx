@@ -21,11 +21,11 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-white shadow-lg">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="flex items-center justify-between h-16">
+        <nav className="bg-white shadow-lg sticky top-0 z-999">
+            <div className="max-w-7xl mx-auto px-4 py-1">
+                <div className="flex items-center justify-between h-16 ">
                     {/* Logo - Left Side */}
-                    <div className="flex-shrink-0 flex items-center">
+                    <div className="flex-shrink-0 flex items-center ">
                         <Link to="/" className="flex items-center">
                             <img
                                 src={rajuChicken}

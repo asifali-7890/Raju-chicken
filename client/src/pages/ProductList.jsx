@@ -115,10 +115,10 @@ const ProductList = () => {
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="sticky top-0 bg-orange-50 z-10 py-6 mb-12 shadow-sm"
+                className="sticky top-16 bg-orange-50 z-10 py-6 mb-12 shadow-sm"
             >
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                    <div className="flex  flex-col md:flex-row gap-4 items-start md:items-center">
                         <div className="relative flex-1 w-full">
                             <input
                                 type="text"
@@ -133,7 +133,7 @@ const ProductList = () => {
                         <select
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
-                            className="w-full md:w-64 px-4 py-3 rounded-xl border-2 border-orange-200 focus:ring-2 focus:ring-orange-500 bg-white"
+                            className="w-full hidden md:w-64 px-4 py-3 rounded-xl border-2 border-orange-200 focus:ring-2 focus:ring-orange-500 bg-white"
                         >
                             <option value="featured">Featured First</option>
                             <option value="priceLow">Price: Low to High</option>
