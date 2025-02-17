@@ -1,6 +1,6 @@
 const OrderSuccess = () => {
     return (
-        <div className="min-h-screen bg-green-50 flex items-center justify-center">
+        <div className="min-h-200 bg-green-50 flex items-center justify-center">
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 text-center">
                 <h1 className="text-4xl font-bold text-green-800 mb-4">Order Placed Successfully!</h1>
                 <p className="text-lg text-gray-700 mb-6">
